@@ -17,7 +17,7 @@ import {
   ContextMenuTrigger,
 } from '@/components/ui/context-menu';
 
-export default function Page() {
+export default function ContextMenuPage() {
   const router = useRouter();
 
   return (
