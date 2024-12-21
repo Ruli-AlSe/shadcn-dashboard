@@ -77,7 +77,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     <>
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Filter emails..."
+          placeholder="Filter by client name, email and status..."
           value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
           onChange={(event) => {
             setCurrentStatus('all');
@@ -198,7 +198,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           </TableBody>
         </Table>
 
-        <div className="space-x-2 py-4 mx-4">
+        <div className="space-x-2 py-4 mx-4 flex justify-between items-center">
           <div className="flex-1 text-sm text-muted-foreground mt-3">
             {table.getFilteredSelectedRowModel().rows.length} of{' '}
             {table.getFilteredRowModel().rows.length} row(s) selected.
@@ -223,6 +223,19 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
             </Button>
           </div>
         </div>
+
+        <Select onValueChange={(value) => table.setPageSize(Number(value))}>
+          <SelectTrigger className="w-[180px] m-4">
+            <SelectValue placeholder="10 rows" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="10">10</SelectItem>
+            <SelectItem value="20">20</SelectItem>
+            <SelectItem value="30">30</SelectItem>
+            <SelectItem value="50">50</SelectItem>
+            <SelectItem value="100">100</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
     </>
   );

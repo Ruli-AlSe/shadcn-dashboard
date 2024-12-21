@@ -2,7 +2,7 @@
 
 import { Badge } from '@/components/ui/badge';
 import { Payment } from '@/data/payments.data';
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, FilterFn, Row } from '@tanstack/react-table';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,6 +15,19 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
+
+const myCustomFilter: FilterFn<Payment> = (
+  row: Row<Payment>,
+  columnId: string,
+  filterValue: string
+) => {
+  filterValue = filterValue.toLowerCase();
+  const filterParts = filterValue.split(' ');
+  const rowValues =
+    `${row.original.email} ${row.original.clientName} ${row.original.status}`.toLowerCase();
+
+  return filterParts.every((part) => rowValues.includes(part));
+};
 
 export const columns: ColumnDef<Payment>[] = [
   {
@@ -111,6 +124,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: 'email',
+    filterFn: myCustomFilter,
     header: ({ column }) => {
       return (
         <Button
